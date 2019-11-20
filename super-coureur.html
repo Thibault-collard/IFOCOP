@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+      window.onload = function(){
+        var masque = window.document.getElementById('container');
+        var sprite = window.document.getElementById('contenu');
+
+        var baisser = {
+          baisse:[
+            {
+              largeurMasque: '129px',
+			        hauteurMasque: '118px',
+			        topDeImage: '259px',
+			        leftDeImage: '-591px'
+            },{
+              largeurMasque: '110px',
+			        hauteurMasque: '118px',
+			        topDeImage: '-4px',
+			        leftDeImage: '-2px'
+            }]
+        };
+
+        var hautSaut = {
+          saut:[{
+			    largeurMasque: '110px',
+			    hauteurMasque: '118px',
+			    topDeImage: '-4px',
+			    leftDeImage: '-2px'
+          },{
+			    largeurMasque: '110px',
+			    hauteurMasque: '118px',
+			    topDeImage: '-377px',
+			    leftDeImage: '-362px'
+          }]
+        };
+
+      var decompositionDuSprite = {
+        perso: [{
+			largeurMasque: '110px',
+			hauteurMasque: '118px',
+			topDeImage: '-130px',
+			leftDeImage: '-130px'
+		},{
+			largeurMasque: '110px',
+			hauteurMasque: '118px',
+			topDeImage: '-130px',
+			leftDeImage: '-256px'
+		},{
+			largeurMasque: '110px',
+			hauteurMasque: '118px',
+			topDeImage: '-130px',
+			leftDeImage: '-371px'
+		},{
+			largeurMasque: '110px',
+			hauteurMasque: '118px',
+			topDeImage: '-130px',
+			leftDeImage: '-487px'
+		},{
+			largeurMasque: '110px',
+			hauteurMasque: '118px',
+			topDeImage: '-130px',
+			leftDeImage: '-608px'
+		},{
+			largeurMasque: '110px',
+			hauteurMasque: '118px',
+			topDeImage: '-130px',
+			leftDeImage: '-729px'
+		},{
+			largeurMasque: '110px',
+			hauteurMasque: '118px',
+			topDeImage: '-130px',
+			leftDeImage: '-844px'
+		}]
+  };
+        i = 0;
+        var j = 0;
+        window.onkeydown = function(event){
+
+        
+          var code = event.keyCode;
+          masque.style.width = decompositionDuSprite.perso[i].largeurMasque;
+				  masque.style.height = decompositionDuSprite.perso[i].hauteurMasque;
+				  sprite.style.top = decompositionDuSprite.perso[i].topDeImage;
+          switch(code){
+            case 37:
+              //gauche
+              sprite.style.transform = "scale(-1, 1)";
+              if(i == 0){
+                i = 6;
+              }
+              sprite.style.left = decompositionDuSprite.perso[i--].leftDeImage
+            break;
+            case 38:
+              //haut
+              sprite.style.transform = "";
+              sprite.style.top = hautSaut.saut[1].topDeImage;
+              sprite.style.left = hautSaut.saut[1].leftDeImage;
+              
+              setTimeout(function(){
+                sprite.style.top = hautSaut.saut[0].topDeImage;
+                sprite.style.left = hautSaut.saut[0].leftDeImage;
+              },500)
+              
+            break;
+            case 39:
+              // droite
+              sprite.style.transform = "scale(1, 1)";
+              if(i == 6){
+                i = 0;
+              }
+              sprite.style.left = decompositionDuSprite.perso[i++].leftDeImage;
+            break;
+            case 40:
+              //bas
+              if(j == 0){
+                sprite.style.transform = "";
+                masque.style.width = baisser.baisse[1].largeurMasque;
+				        masque.style.height = baisser.baisse[1].hauteurMasque;
+                sprite.style.top = baisser.baisse[1].topDeImage;
+                sprite.style.left = baisser.baisse[1].leftDeImage;
+                j = 1;
+              }
+              
+              else if(j == 1){
+                sprite.style.transform = "rotateZ(90deg)";
+                masque.style.width = baisser.baisse[0].largeurMasque;
+				        masque.style.height = baisser.baisse[0].hauteurMasque;
+                sprite.style.top = baisser.baisse[0].topDeImage;
+                sprite.style.left = baisser.baisse[0].leftDeImage;
+                j = 0;
+              }
+              
+            break;
+            };
+            
+          };
+          window.onkeyup = function(event){
+            var code = event.keyCode;
+          switch(code){
+          case 13:
+//Entrée
+
+          window.document.getElementById('contenu').style.top= hautSaut.saut[0].topDeImage;
+          window.document.getElementById('contenu').style.left = hautSaut.saut[0].leftDeImage;
+          break;
+          }
+        }
+
+      }
+      
+    </script>
+  </head>
+  <body>
+    <h1></h1>
+    <div>
+        <div id="container" class="masque" style="overflow:hidden;position:absolute;width: 110px;height: 118px">        
+          <img id="contenu" src="sprite.png" class="sprite" style="position:absolute;top: -4px;left: -2px"/>
+      </div>
+    </div>
+    <noscript>
+      <p>Veuillez activer JavaScript</p>
+    </noscript>
+  </body>
+</html>
